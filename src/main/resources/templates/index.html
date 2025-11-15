@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+</head>
+<body>
+    <form action="/shorten" method="post" th:action="@{/shorten}" th:object="${url}">
+        <input type="text" name="longURL" placeholder="Paste your URL" required>
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit">Shorten</button>
+    </form>
+
+    <div th:if="${shortURL}">
+        <p>Shortened URL:</p>
+        <a th:href="${shortURL}" th:text="${shortURL}"></a>
+    </div>
+</body>
+</html>
