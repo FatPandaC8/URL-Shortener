@@ -1,0 +1,12 @@
+Functional Requirements:
+- Submit long URL -> receive a shortened version: check
+- Access original URL by using shortened one: check
+
+Non Functional Requirements:
+- Should ensure uniqueness for short codes (no 2 long URLs can map to the same short URL)
+- The redirection should occur with minimal delay (< 100ms)
+- Should be reliable and available 99.99%
+- Should be scale to support 1B shortened URLs and 100M DAU
+
+UI/UX (dev):
+- Show all the urls in the storage

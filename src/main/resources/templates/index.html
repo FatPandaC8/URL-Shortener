@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>URL Shortener</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <form action="/shorten" method="post" th:action="@{/shorten}" th:object="${url}">
-        <input type="text" name="longURL" placeholder="Paste your URL" required>
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-        <button type="submit">Shorten</button>
+        <div class="inputButtonWrapper">
+            <div class="inputGroup">
+                <input type="text" name="longURL" placeholder="Paste your URL" required>
+            </div>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <button type="submit">Shorten</button>
+        </div>
     </form>
 
     <div th:if="${shortURL}">

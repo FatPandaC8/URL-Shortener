@@ -1,5 +1,7 @@
 package com.url_shortener.urls.controllers;
 
+import com.url_shortener.urls.entity.InputDTO;
+import com.url_shortener.urls.entity.OutputDTO;
 import com.url_shortener.urls.service.URLService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,12 @@ public class URLController {
 
     @PostMapping("/shorten")
     public String shorten(@RequestParam String longURL, Model model) {
-        String code = urlService.shortenURL(longURL);
-        model.addAttribute("shortURL", "http://localhost:9090/" + code);
+        OutputDTO outputDTO = urlService.shortenURL(new InputDTO(longURL));
+
+        model.addAttribute(
+                "shortURL",
+                "http://localhost:9090/"
+                + outputDTO.shortCode());
         return "index";
     }
 

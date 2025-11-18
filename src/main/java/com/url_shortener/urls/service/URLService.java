@@ -1,23 +1,52 @@
 package com.url_shortener.urls.service;
 
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+
+import com.url_shortener.urls.entity.InputDTO;
+import com.url_shortener.urls.entity.OutputDTO;
+import com.url_shortener.urls.entity.URLEntity;
+import com.url_shortener.urls.repository.URLRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class URLService {
-    private final Map<String, String> storage = new HashMap<>();
+    private final URLRepository urlRepository;
 
-    public String shortenURL(String longURL) {
+    public URLService(URLRepository urlRepository) {
+        this.urlRepository = urlRepository;
+    }
+
+    /**
+     * Industry standard:
+     * - Store the long URL in DB -> DB generate an integer ID
+     * - Convert that to base62
+     * - That base62 is your short code
+     * => Hard for distributed systems -> hard for synchronous
+     * @param inputDTO long url
+     * @return shortened url
+     */
+    public OutputDTO shortenURL(InputDTO inputDTO) {
+        if (inputDTO == null) {
+            throw new IllegalArgumentException("Input DTO is null");
+        }
+
         String code = generateCode();
-        storage.put(code, longURL);
-        return code;
+
+        URLEntity urlEntity = new URLEntity(inputDTO.inputURL(), code);
+
+        URLEntity savedEntity = urlRepository.save(urlEntity);
+
+        return new OutputDTO(
+                savedEntity.getID(),
+                savedEntity.getLongURL(),
+                savedEntity.getShortCode()
+        );
     }
 
     public String getLongURL(String code) {
-        return storage.get(code);
+        URLEntity urlEntity = urlRepository.findByShortCode(code);
+
+        return urlEntity.getLongURL();
     }
 
     private String generateCode() {
