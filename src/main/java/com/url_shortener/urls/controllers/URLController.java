@@ -18,7 +18,7 @@ public class URLController {
 
     /**
      * GetMapping: when someone sends requests to this path, run this method
-     *             and return the result as the HTTP response
+     *             and return the result as the HTTP response.
      *
      * @param model  without it, just return the template name -> static rendering.
      *               with it, return template name + dynamic data the page can use
@@ -31,8 +31,8 @@ public class URLController {
     }
 
     @PostMapping("/shorten")
-    public String shorten(@RequestParam String longURL, Model model) {
-        OutputDTO outputDTO = urlService.shortenURL(new InputDTO(longURL));
+    public String shorten(@RequestParam String originalURL, Model model) {
+        OutputDTO outputDTO = urlService.shortenURL(new InputDTO(originalURL));
 
         model.addAttribute(
                 "shortURL",
@@ -41,13 +41,18 @@ public class URLController {
         return "index";
     }
 
+    /**
+     * Spring boot "redirect:" is a keyword to sends a 302 response.
+     * @param code shortCode
+     * @return redirection to the original URL
+     */
     @GetMapping("/{code}")
     public String redirect(@PathVariable String code) {
-        String longURL = urlService.getLongURL(code);
-        if (longURL == null) {
+        String originalURL = urlService.getOriginalURL(code);
+        if (originalURL == null) {
             return "error";
         }
 
-        return "redirect:" + longURL;
+        return "redirect:" + originalURL;
     }
 }
