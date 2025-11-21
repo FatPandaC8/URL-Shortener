@@ -10,7 +10,7 @@ import com.url_shortener.urls.entity.URLEntity;
 import com.url_shortener.urls.repository.URLRepository;
 
 @Service
-public class URLService {
+public class ShortenService {
     private final URLRepository urlRepository;
     private final char[] ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
@@ -58,13 +58,6 @@ public class URLService {
                 savedEntity.getOriginalURL(),
                 savedEntity.getShortCode()
         );
-    }
-
-    public String getOriginalURL(String shortCode) {
-        // Optional.orElse: return a default value if not exist
-        return urlRepository.findByShortCode(shortCode)
-                            .map(URLEntity::getOriginalURL)
-                            .orElse(null);
     }
 
     private String base62(long id) {
