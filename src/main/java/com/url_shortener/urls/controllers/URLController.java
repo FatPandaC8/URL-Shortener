@@ -15,7 +15,6 @@ import com.url_shortener.urls.entity.InputDTO;
 import com.url_shortener.urls.entity.OutputDTO;
 import com.url_shortener.urls.service.RedirectService;
 import com.url_shortener.urls.service.ShortenService;
-import com.url_shortener.urls.service.URLService;
 
 @Controller
 public class URLController {

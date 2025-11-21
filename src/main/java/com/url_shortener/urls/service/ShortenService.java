@@ -14,7 +14,7 @@ public class ShortenService {
     private final URLRepository urlRepository;
     private final char[] ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
-    public URLService(URLRepository urlRepository) {
+    public ShortenService(URLRepository urlRepository) {
         this.urlRepository = urlRepository;
     }
 
