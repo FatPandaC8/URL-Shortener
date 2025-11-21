@@ -1,7 +1,7 @@
 package com.url_shortener.urls.service;
 
-import java.util.UUID;
 import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.url_shortener.urls.entity.InputDTO;
@@ -12,6 +12,7 @@ import com.url_shortener.urls.repository.URLRepository;
 @Service
 public class URLService {
     private final URLRepository urlRepository;
+    private final char[] ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     public URLService(URLRepository urlRepository) {
         this.urlRepository = urlRepository;
@@ -30,13 +31,11 @@ public class URLService {
         if (inputDTO == null) {
             throw new IllegalArgumentException("Input DTO is null");
         }
-
-        String code = generateShortCode();
-
+        
         Optional<URLEntity> existing = urlRepository.findByOriginalURL(inputDTO.inputURL()); // find the existing url by inputDTO, not by code
         
-          // Optional.isPresent: check if the value exist == Optional.isEmpty
-          // Optional.get: access the data inside Optional, in this case access URLEntity; but if empty optional -> throw NoSuchElementException == orElseThrow == orElseThrow(exceptionSupplier)
+        // Optional.isPresent: check if the value exist == Optional.isEmpty
+        // Optional.get: access the data inside Optional, in this case access URLEntity; but if empty optional -> throw NoSuchElementException == orElseThrow == orElseThrow(exceptionSupplier)
         if (existing.isPresent()) {
             return new OutputDTO(
                 existing.get().getID(),
@@ -44,10 +43,16 @@ public class URLService {
                 existing.get().getShortCode()
             );
         }
-        URLEntity urlEntity = new URLEntity(inputDTO.inputURL(), code);
+        
+        URLEntity urlEntity = new URLEntity();
+        urlEntity.setOriginalURL(inputDTO.inputURL());
 
         URLEntity savedEntity = urlRepository.save(urlEntity);
 
+        String code = base62(savedEntity.getID());
+        savedEntity.setShortCode(code);
+
+        urlRepository.saveAndFlush(savedEntity);
         return new OutputDTO(
                 savedEntity.getID(),
                 savedEntity.getOriginalURL(),
@@ -62,8 +67,17 @@ public class URLService {
                             .orElse(null);
     }
 
-    private String generateShortCode() {
-        return UUID.randomUUID().toString().substring(0, 6);
+    private String base62(long id) {
+        if (id == 0) { 
+            return "0";
+        }
+        char[] buffer = new char[11];
+        int pos = 11;
+        while (id != 0) {
+            buffer[--pos] = ALPHABET[(int) (id % 62)];
+            id /= 62;
+        }
+        return new String(buffer, pos, 11 - pos);
     }
 }
 

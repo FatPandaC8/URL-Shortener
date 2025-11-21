@@ -23,12 +23,11 @@ public class URLEntity {
     @Column(unique=true, nullable=false)
     private String originalURL;
 
-    @Column(unique=true, nullable=false)
+    @Column(unique=true)
     private String shortCode;
 
-    public URLEntity(String originalURL, String shortCode) {
+    public URLEntity(String originalURL) {
         this.originalURL = originalURL;
-        this.shortCode = shortCode;
     }
 
     public Long getID() {

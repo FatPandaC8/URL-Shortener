@@ -3,7 +3,6 @@ package com.url_shortener.urls.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import com.url_shortener.urls.entity.URLEntity;
-import com.url_shortener.urls.entity.InputDTO;
 
 /**
  * Optional: handling value that can be null (aka throw NullPointerException)
