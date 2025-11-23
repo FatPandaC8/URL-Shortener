@@ -1,0 +1,29 @@
+package com.url_shortener.urls.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.url_shortener.urls.entity.UserEntity;
+import com.url_shortener.urls.repository.UserRepository;
+
+/**
+ * Autowired : resolve and inject collaborating beans into out bean
+ * Autowiring on properties, setters and constructors
+ */
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public UserEntity registerUser(String username, String email, String rawPassword) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(username);
+        userEntity.setEmail(email);
+        userEntity.setPassword(passwordEncoder.encode(rawPassword));
+        userEntity.setRole_num(1);
+        return userRepository.save(userEntity);
+    }
+}
