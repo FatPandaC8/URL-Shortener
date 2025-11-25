@@ -9,8 +9,13 @@
     <form action="/shorten" method="post" th:action="@{/shorten}" th:object="${url}">
         <div class="inputButtonWrapper">
             <div class="inputGroup">
+                <!--name attribute used by the server to identify the fields in form submit-->
                 <input type="text" name="originalURL" placeholder="Paste your URL" required>
             </div>
+            <label>
+                <input type="hidden" name="isPrivate" value="false">
+                <input type="checkbox" name="isPrivate" value="true"> Private
+            </label>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
             <button type="submit">Shorten</button>
         </div>
@@ -20,5 +25,28 @@
         <p>Shortened URL:</p>
         <a th:href="${shortURL}" th:text="${shortURL}"></a>
     </div>
+
+    <table th:if="${urls}">
+        <!--thread tag for grouping items together-->
+        <thead>
+            <tr>
+                <th>Original URL</th>
+                <th>Short URL</th>
+            </tr>
+        </thead>
+        <!--tbody: table body-->
+        <tbody>
+            <tr th:each="url : ${urls}">
+                <td>
+                    <a th:href="${url.originalURL}" th:text="${#strings.abbreviate(url.originalURL, 50)}">
+                    </a>
+                </td>
+                <td>
+                    <a th:href="|http://localhost:9090/shorten/${url.shortCode}|"
+                    th:text="|http://localhost:9090/shorten/${url.shortCode}|"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

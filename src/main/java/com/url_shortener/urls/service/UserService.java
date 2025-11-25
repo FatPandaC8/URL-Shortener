@@ -26,4 +26,13 @@ public class UserService {
         userEntity.setRole_num(1);
         return userRepository.save(userEntity);
     }
+
+    public UserEntity registerAdmin(String username, String email, String rawPassword) {
+        UserEntity admin = new UserEntity();
+        admin.setUsername(username);
+        admin.setEmail(email);
+        admin.setPassword(passwordEncoder.encode(rawPassword));
+        admin.setRole_num(2); // 2 = admin
+        return userRepository.save(admin);
+    }
 }

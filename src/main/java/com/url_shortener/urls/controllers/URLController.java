@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.url_shortener.urls.entity.InputDTO;
 import com.url_shortener.urls.entity.OutputDTO;
@@ -26,14 +27,18 @@ public class URLController {
     }
 
     @PostMapping("/shorten")
-    public String shorten(@RequestParam String originalURL, Model model) {
-        OutputDTO outputDTO = shortenService.shortenURL(new InputDTO(originalURL));
+    public String shorten(@RequestParam String originalURL,
+                        @RequestParam(required = false) Boolean isPrivate,
+                        RedirectAttributes redirectAttributes) {
+                            
+        OutputDTO outputDTO = shortenService.shortenURL(new InputDTO(originalURL, isPrivate != null ? isPrivate : false));
 
-        model.addAttribute(
+        redirectAttributes.addFlashAttribute(
                 "shortURL",
-                "http://localhost:9090/"
-                + outputDTO.shortCode());
-        return "index";
+                "http://localhost:9090/" + outputDTO.shortCode()
+        );
+                
+        return "redirect:/";
     }
 
     /**

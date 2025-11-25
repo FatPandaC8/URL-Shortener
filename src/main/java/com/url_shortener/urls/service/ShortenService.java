@@ -1,18 +1,18 @@
 package com.url_shortener.urls.service;
 
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.url_shortener.urls.entity.InputDTO;
 import com.url_shortener.urls.entity.OutputDTO;
 import com.url_shortener.urls.entity.URLEntity;
 import com.url_shortener.urls.repository.URLRepository;
+import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShortenService {
+
     private final URLRepository urlRepository;
-    private final char[] ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+    private final char[] ALPHABET =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
     public ShortenService(URLRepository urlRepository) {
         this.urlRepository = urlRepository;
@@ -31,37 +31,50 @@ public class ShortenService {
         if (inputDTO == null) {
             throw new IllegalArgumentException("Input DTO is null");
         }
-        
-        Optional<URLEntity> existing = urlRepository.findByOriginalURL(inputDTO.inputURL()); // find the existing url by inputDTO, not by code
-        
+
+        Optional<URLEntity> existing = urlRepository.findByOriginalURL(
+            inputDTO.inputURL()
+        ); // find the existing url by inputDTO, not by code
+
         // Optional.isPresent: check if the value exist == Optional.isEmpty
         // Optional.get: access the data inside Optional, in this case access URLEntity; but if empty optional -> throw NoSuchElementException == orElseThrow == orElseThrow(exceptionSupplier)
         if (existing.isPresent()) {
             return new OutputDTO(
-                existing.get().getID(),
+                existing.get().getId(),
                 existing.get().getOriginalURL(),
                 existing.get().getShortCode()
             );
         }
-        
+
         URLEntity urlEntity = new URLEntity();
         urlEntity.setOriginalURL(inputDTO.inputURL());
+        urlEntity.setIsPrivate(inputDTO.isPrivate() != null ? inputDTO.isPrivate() : false);
+
+        String code = getDeterministicShortCode(inputDTO.inputURL());
+        if (code == null || code.isBlank()) {
+            throw new IllegalStateException("Generated shortCode cannot be null or blank");
+        }
+        urlEntity.setShortCode(code);
 
         URLEntity savedEntity = urlRepository.save(urlEntity);
-
-        String code = base62(savedEntity.getID());
-        savedEntity.setShortCode(code);
-
-        urlRepository.saveAndFlush(savedEntity);
+    
         return new OutputDTO(
-                savedEntity.getID(),
-                savedEntity.getOriginalURL(),
-                savedEntity.getShortCode()
+            savedEntity.getId(),
+            savedEntity.getOriginalURL(),
+            savedEntity.getShortCode()
         );
     }
 
+    private String getDeterministicShortCode(String originalURL) {
+        // 1. Hash the URL
+        long hash = Math.abs(originalURL.hashCode()); // simple hash; you can use MD5/SHA1 for longer codes
+        if (hash < 0) hash = -(long)hash;
+        // 2. Convert hash to base62
+        return base62(hash);
+    }
+
     private String base62(long id) {
-        if (id == 0) { 
+        if (id == 0) {
             return "0";
         }
         char[] buffer = new char[11];

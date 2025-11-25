@@ -5,7 +5,7 @@ Record of all the bugs encounter with detailed fix of them here
   - Bug     : The same url does not map to the same shortcode (Logic_Mapping)
   - Category: Logic Bug
   - Example : www.bitly_example.com will make 2 different shortcode on different attempt
-  - State   : Not fixed
+  - State   : Fixed
   - Thought : In industry, it is deterministic (generate the same shortcode if given the same url)
 
 (20/11/2025):
@@ -20,3 +20,13 @@ Record of all the bugs encounter with detailed fix of them here
   => Because of the change from longURL to originalURl is not made in the index.html.
 
   => Logic_Mapping is FIXED
+
+(25/11/2025)
+  - Bug : org.attoparser.ParseException: Exception evaluating SpringEL expression: "url.id" (template: "index" - line 25, col 13) -> HTML_Mapping
+  - Category : Syntax Bug
+  - State : Fixed 
+  - Reason: thread -> thead of html
+  - Solution: fix syntax in html and ./mvnw clean install (important)
+  
+  - Bug : if the url is checked as private -> it cannot be mark as unchecked if input again
+  - Category : Feature Bug

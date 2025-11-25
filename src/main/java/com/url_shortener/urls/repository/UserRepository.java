@@ -9,4 +9,5 @@ import com.url_shortener.urls.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUserID(Long userID);
+    Optional<UserEntity> findByUsername(String username);
 }
