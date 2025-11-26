@@ -30,3 +30,10 @@ Record of all the bugs encounter with detailed fix of them here
   
   - Bug : if the url is checked as private -> it cannot be mark as unchecked if input again
   - Category : Feature Bug
+  - Fixed 
+
+(26/11/2025)
+  - Optimization: select ue1_0.userid,ue1_0.created_at,ue1_0.email,ue1_0.password,ue1_0.role_num,ue1_0.username from users ue1_0 where ue1_0.userid=? 
+  - Why : everytime we get all the public url, we do this which select everything, which can be very time consuming
+  - Suggest 1: limit the select using a custom query by @Query
+  - Suggest 2: Lazy loading + Eager loading 

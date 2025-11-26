@@ -1,51 +1,177 @@
-/* Button Input Wrapper */
-.inputButtonWrapper {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #fafafa;
     display: flex;
-    gap: 50px;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    width: 100%;
+    padding: 20px 40px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-/* Buttons */
-button {
-  border: 2px solid #24b4fb;
-  background-color: #24b4fb;
-  border-radius: 45px;
-  cursor: pointer;
-  padding: 0.8em 1.2em 0.8em 1em;
-  transition: all ease-in-out 0.2s;
-  font-size: 16px;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d2d2d;
 }
 
-button:hover {
-  background-color: #0071e2;
+.header-left {
+    display: flex;          /* make the container flex */
+    flex-direction: row;    /* row layout (default, actually) */
+    align-items: center;    /* vertical alignment */
+    gap: 15px;              /* space between logo and link */
 }
 
-/* Input box */
-.inputGroup {
-  font-family: 'Segoe UI', sans-serif;
-  margin: 1em 0 1em 0;
-  max-width: 250px;
-  position: relative;
+.header-left a {
+    text-decoration: none;
+    color: #555;
 }
 
-.inputGroup input {
-  font-size: 100%;
-  padding: 0.8em;
-  outline: none;
-  border: 2px solid rgb(200, 200, 200);
-  background-color: transparent;
-  border-radius: 20px;
-  width: 100%;
+.header-left a:hover {
+    color: #0069ff;
 }
 
-.inputGroup :is(input:focus, input:valid)~label {
-  transform: translateY(-50%) scale(.9);
-  margin: 0em;
-  margin-left: 1.3em;
-  padding: 0.4em;
-  background-color: #e8e8e8;
+.header-right {
+    display: flex;
+    gap: 20px;
 }
 
-.inputGroup :is(input:focus, input:valid) {
-  border-color: rgb(150, 150, 200);
+.header-right a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.header-right a:hover {
+    color: #0069ff;
+}
+
+/* Hero Section */
+.hero {
+    max-width: 700px;
+    width: 100%;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.hero h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+/* Form */
+.shorten-form {
+    display: flex;
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    gap: 12px;
+    align-items: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.shorten-form input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+    font-size: 16px;
+}
+
+.shorten-form label {
+    font-size: 14px;
+    color: #333;
+}
+
+.shorten-form button {
+    background: #0069ff;
+    padding: 12px 18px;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.shorten-form button:hover {
+    background: #0053d6;
+}
+
+/* Short URL Output */
+.output {
+    margin-top: 25px;
+    background: #eef6ff;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.output a {
+    font-weight: bold;
+    color: #0069ff;
+}
+
+/* URL Table */
+.list {
+    width: 90%;
+    max-width: 900px;
+    margin-top: 50px;
+}
+
+.list h2 {
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+thead {
+    background: #0069ff;
+    color: #fff;
+}
+
+td, th {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background: #f7faff;
+}
+
+tbody a {
+    color: #0069ff;
+    font-weight: 500;
 }

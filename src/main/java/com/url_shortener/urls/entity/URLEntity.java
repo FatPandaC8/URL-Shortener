@@ -37,8 +37,8 @@ public class URLEntity {
     }
     
     @ManyToOne //each url belongs to one user, but one user can have many urls
-    @JoinColumn(name = "created_by")
-    private UserEntity created_by;
+    @JoinColumn(name = "createdBy")
+    private UserEntity createdBy;
     private Boolean isPrivate;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime expireAt;

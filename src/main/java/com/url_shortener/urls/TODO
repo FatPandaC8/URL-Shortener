@@ -10,3 +10,11 @@ Non Functional Requirements:
 
 UI/UX (dev):
 - Show all the urls in the storage
+
+Part 4:
+- Handle LazyLoadingException
+- Understadning OSIV Filter
+- Loading Lazy associations
+    + JPQL
+    + Entity Graph
+- JPA Best Practice
