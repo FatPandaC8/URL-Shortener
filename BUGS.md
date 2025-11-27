@@ -37,3 +37,9 @@ Record of all the bugs encounter with detailed fix of them here
   - Why : everytime we get all the public url, we do this which select everything, which can be very time consuming
   - Suggest 1: limit the select using a custom query by @Query
   - Suggest 2: Lazy loading + Eager loading 
+  
+(27/11/2025)
+  - Bug: The resource from “http://localhost:9090/login” was blocked due to MIME type (“text/html”) mismatch (X-Content-Type-Options: nosniff). 
+  - Category: Security Bug (i think so) 
+  - Not a Security Bug (in this case) as i just put javascript files on the wrong directory
+  

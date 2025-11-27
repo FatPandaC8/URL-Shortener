@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,16 @@
 <header>
     <div class="header-left">
         <span class="logo">Shawty</span>
-        <a href="#">My URLs</a>
+        <a href="#" sec:authorize="isAuthenticated()">My URLs</a>
+        <a href="#" sec:authorize="hasRole('ADMIN')">Admin Dashboard</a>
     </div>
     
     <div class="header-right">
-        <a href="#">Log In</a>
-        <a href="#">Register</a>
-        <!--<a href="#">Log Out</a>-->
+        <a href="#" th:href="@{/login}" sec:authorize="isAnonymous()">Log In</a>
+        <a href="#" th:href="@{/register}" sec:authorize="isAnonymous()">Register</a>
+        <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+            <button type="submit">Log out</button>
+        </form>
     </div>
 </header>
 

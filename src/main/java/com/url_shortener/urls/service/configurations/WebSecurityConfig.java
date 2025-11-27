@@ -15,17 +15,22 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/register", "/", "/css/**", "/shorten", "/*").permitAll()
-                                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/register", "/", "/css/**", "/shorten", "/error", "/login"
+                                    , "/*", "/js/**").permitAll() // all public url
+                                .requestMatchers("/mu-urls").authenticated()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                     .loginPage("/login")
-                    .defaultSuccessUrl("/shorten")
+                    .defaultSuccessUrl("/")
                     .permitAll()
                 )
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
+                );
 
         return http.build();
     }

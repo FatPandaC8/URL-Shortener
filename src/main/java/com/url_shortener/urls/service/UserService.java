@@ -1,6 +1,9 @@
 package com.url_shortener.urls.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,7 @@ import com.url_shortener.urls.repository.UserRepository;
  * Autowiring on properties, setters and constructors
  */
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -34,5 +37,28 @@ public class UserService {
         admin.setPassword(passwordEncoder.encode(rawPassword));
         admin.setRole_num(2); // 2 = admin
         return userRepository.save(admin);
+    }
+    
+    /*
+    ADMIN: 
+    bach123@gmail.com
+    123
+    
+    USER:
+    user123@gmail.com
+    123
+    */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity userEntity = userRepository.findByEmail(username)
+                        .orElseThrow(
+                            () -> new UsernameNotFoundException("Username not found, please register")
+                        );
+                        
+        return org.springframework.security.core.userdetails.User.builder()
+        .username(userEntity.getUsername())
+        .password(userEntity.getPassword())
+        .roles(userEntity.getRole_num() == 2 ? "ADMIN" : "USER")
+        .build();
     }
 }
