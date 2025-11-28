@@ -18,3 +18,7 @@ Part 4:
     + JPQL
     + Entity Graph
 - JPA Best Practice
+
+TODAY: only the user can see their own urls if log in 
+- If there's a user : add an if inside PageController before giving the list of urls 
+- Else: show the public urls 

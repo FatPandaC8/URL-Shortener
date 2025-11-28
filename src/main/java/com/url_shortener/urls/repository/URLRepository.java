@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 import com.url_shortener.urls.entity.URLEntity;
+import com.url_shortener.urls.entity.UserEntity;
 
 /**
  * Optional: handling value that can be null (aka throw NullPointerException)
@@ -17,4 +18,5 @@ public interface URLRepository extends JpaRepository<URLEntity, Long> {
     Optional<URLEntity> findByOriginalURL(String originalURL);
     Optional<URLEntity> findByShortCode(String shortCode);
     List<URLEntity> findByIsPrivateIsFalseOrderByCreatedAtDesc();
+    List<URLEntity> findByCreatedBy(UserEntity currentUser);
 }

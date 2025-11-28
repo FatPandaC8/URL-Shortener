@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #fafafa;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    width: 100%;
+    padding: 20px 40px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2d2d2d;
+    text-decoration: none;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-left a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color .2s;
+}
+
+.header-left a:hover {
+    color: #0069ff;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-right a,
+.header-right button {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color .2s;
+}
+
+.header-right a:hover,
+.header-right button:hover {
+    color: #0069ff;
+}
+
+/* URL Table Section */
+.list {
+    width: 90%;
+    max-width: 900px;
+    margin-top: 50px;
+}
+
+.list h2 {
+    margin-bottom: 15px;
+    color: #222;
+}
+
+table {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border-collapse: collapse;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+thead {
+    background: #0069ff;
+    color: #fff;
+}
+
+td, th {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+    background: #f7faff;
+}
+
+tbody tr:hover {
+    background: #e6f0ff;
+}
+
+tbody a {
+    color: #0069ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+tbody a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 10px;
+    color: #555;
+}
+
+p a {
+    color: #0069ff;
+    font-weight: 500;
+}

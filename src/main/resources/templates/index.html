@@ -11,14 +11,19 @@
 
 <header>
     <div class="header-left">
-        <span class="logo">Shawty</span>
-        <a href="#" sec:authorize="isAuthenticated()">My URLs</a>
-        <a href="#" sec:authorize="hasRole('ADMIN')">Admin Dashboard</a>
+        <span class="logo">
+            <a th:href="@{/}">Shawty</a>
+        </span>
+        <a th:href="@{/my-urls}" sec:authorize="isAuthenticated()">My URLs</a>
+        <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')">Admin Dashboard</a>
     </div>
     
     <div class="header-right">
-        <a href="#" th:href="@{/login}" sec:authorize="isAnonymous()">Log In</a>
-        <a href="#" th:href="@{/register}" sec:authorize="isAnonymous()">Register</a>
+        <a th:href="@{/login}" sec:authorize="isAnonymous()">Log In</a>
+        <a th:href="@{/register}" sec:authorize="isAnonymous()">Register</a>
+        
+        <span sec:authorize="isAuthenticated()">Welcome <span sec:authentication="name"></span></span>
+        
         <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
             <button type="submit">Log out</button>
         </form>
@@ -45,8 +50,8 @@
     </div>
 </section>
 
-<section class="list" th:if="${urls}">
-    <h2>Your Links</h2>
+<section class="list" th:if="${urls != null and !urls.isEmpty()}">
+    <h2>Public Links</h2>
 
     <table>
         <thead>

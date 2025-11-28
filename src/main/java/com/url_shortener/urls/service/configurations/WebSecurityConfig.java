@@ -16,20 +16,23 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/register", "/", "/css/**", "/shorten", "/error", "/login"
-                                    , "/*", "/js/**").permitAll() // all public url
-                                .requestMatchers("/mu-urls").authenticated()
+                                    , "/js/**", "/debug").permitAll() // all public url
+                                .requestMatchers("/my-urls").authenticated()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                     .loginPage("/login")
-                    .defaultSuccessUrl("/")
+                    .defaultSuccessUrl("/", true)
                     .permitAll()
                 )
                 .logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout")
                     .permitAll()
+                )
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionFixation().migrateSession()
                 );
 
         return http.build();
