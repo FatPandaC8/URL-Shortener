@@ -30,9 +30,6 @@ public class WebSecurityConfig {
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout")
                     .permitAll()
-                )
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionFixation().migrateSession()
                 );
 
         return http.build();

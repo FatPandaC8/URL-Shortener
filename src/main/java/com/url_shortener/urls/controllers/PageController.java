@@ -50,7 +50,11 @@ public class PageController {
     @GetMapping("/my-urls")
     public String showMyURLs(Model model) {
         UserEntity currentUser = securityUtil.getCurrentUser();
+        System.out.println("Current user: " + currentUser.getEmail());
+        
         List<URLEntity> currentUserURLs = urlRepository.findByCreatedBy(currentUser);
+        System.out.println("URLs found: " + currentUserURLs.size());
+    
         model.addAttribute("urls", currentUserURLs);
         return "my-urls";
     }

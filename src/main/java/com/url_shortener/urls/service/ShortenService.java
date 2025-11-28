@@ -3,6 +3,7 @@ package com.url_shortener.urls.service;
 import com.url_shortener.urls.entity.InputDTO;
 import com.url_shortener.urls.entity.OutputDTO;
 import com.url_shortener.urls.entity.URLEntity;
+import com.url_shortener.urls.entity.UserEntity;
 import com.url_shortener.urls.repository.URLRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Service;
 public class ShortenService {
 
     private final URLRepository urlRepository;
+    private final SecurityUtil securityUtil;
     private final char[] ALPHABET =
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 
-    public ShortenService(URLRepository urlRepository) {
+    public ShortenService(URLRepository urlRepository, SecurityUtil securityUtil) {
         this.urlRepository = urlRepository;
+        this.securityUtil = securityUtil;
     }
 
     /**
@@ -49,6 +52,11 @@ public class ShortenService {
         URLEntity urlEntity = new URLEntity();
         urlEntity.setOriginalURL(inputDTO.inputURL());
         urlEntity.setIsPrivate(inputDTO.isPrivate() != null ? inputDTO.isPrivate() : false);
+        
+        UserEntity currentUser = securityUtil.getCurrentUser();
+        if (currentUser != null) {
+            urlEntity.setCreatedBy(currentUser);
+        }
 
         String code = getDeterministicShortCode(inputDTO.inputURL());
         if (code == null || code.isBlank()) {
