@@ -10,7 +10,7 @@ Even though there's a lot more features that is still missing, and a lot of bad 
 taught me more than i expected. 
 
 ---
-
+![Screenshot](https://github.com/FatPandaC8/URL-Shortener/blob/6e8486712d66451da3a0a6aab01715eafff2df2d/Screenshot%202025-11-29%20225934.png)
 ## Features
 
 ### **Current**
@@ -22,6 +22,9 @@ taught me more than i expected.
 - Role based access control
 - Lazy Loading
 - Pagination (love this)
+- Simple user registery, log in, log out
+- Private, public URLs
+- User-owned urls
 
 ---
 
