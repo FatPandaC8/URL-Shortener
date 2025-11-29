@@ -1,9 +1,13 @@
 package com.url_shortener.urls.repository;
 
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import com.url_shortener.urls.entity.URLEntity;
 import com.url_shortener.urls.entity.UserEntity;
 
@@ -17,6 +21,9 @@ import com.url_shortener.urls.entity.UserEntity;
 public interface URLRepository extends JpaRepository<URLEntity, Long> {
     Optional<URLEntity> findByOriginalURL(String originalURL);
     Optional<URLEntity> findByShortCode(String shortCode);
-    List<URLEntity> findByIsPrivateIsFalseOrderByCreatedAtDesc();
     List<URLEntity> findByCreatedBy(UserEntity currentUser);
+    
+    // It must select from the URLEntity not the table urls 
+    @Query("select u from URLEntity u left join fetch u.createdBy where u.isPrivate = false")
+    Page<URLEntity> findPublicURLs(Pageable pageable);
 }

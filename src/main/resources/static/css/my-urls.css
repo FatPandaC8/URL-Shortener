@@ -8,7 +8,7 @@
 body {
     background: #fafafa;
     display: flex;
-    justify-content: center;
+    
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
@@ -20,30 +20,28 @@ header {
     padding: 20px 40px;
     background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo a {
+.logo {
     font-size: 24px;
     font-weight: bold;
     color: #2d2d2d;
-    text-decoration: none;
 }
 
 .header-left {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 }
 
 .header-left a {
     text-decoration: none;
     color: #555;
-    font-weight: 500;
-    transition: color .2s;
 }
 
 .header-left a:hover {

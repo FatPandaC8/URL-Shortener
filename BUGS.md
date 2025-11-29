@@ -43,3 +43,7 @@ Record of all the bugs encounter with detailed fix of them here
   - Category: Security Bug (i think so) 
   - Not a Security Bug (in this case) as i just put javascript files on the wrong directory
   
+(29/11/2025)
+  - Observation: every time, i go back and forth between endpoints -> it loads the database -> heavy on database 
+  - Solution 1: Pageable (shows a page of a limited view of the database) -> result in the websites css is a bit messed up ?
+  - Solution 2: Combine that with Lazy Loading 

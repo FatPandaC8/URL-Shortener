@@ -51,8 +51,8 @@
                 </td>
 
                 <td>
-                    <a th:href="@{/${url.shortCode}}"
-                       th:text="@{/${url.shortCode}}"></a>
+                    <a th:href="|http://localhost:9090/shorten/${url.shortCode}|"
+                       th:text="|http://localhost:9090/shorten/${url.shortCode}|"></a>
                 </td>
 
                 <td th:text="${url.clickCount}">0</td>

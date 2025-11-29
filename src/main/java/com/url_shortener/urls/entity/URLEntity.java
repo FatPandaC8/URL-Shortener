@@ -2,8 +2,11 @@ package com.url_shortener.urls.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,11 +39,14 @@ public class URLEntity {
         this.originalURL = originalURL;
     }
     
-    @ManyToOne //each url belongs to one user, but one user can have many urls
+    @ManyToOne(fetch = FetchType.LAZY) //each url belongs to one user, but one user can have many urls
     @JoinColumn(name = "createdBy")
     private UserEntity createdBy;
+    
     private Boolean isPrivate;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime expireAt;
+    
+    @ColumnDefault("0")
     private Long clickCount;
 }

@@ -6,16 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.url_shortener.urls.entity.PageResult;
 import com.url_shortener.urls.entity.URLEntity;
 import com.url_shortener.urls.entity.UserEntity;
 import com.url_shortener.urls.repository.URLRepository;
+import com.url_shortener.urls.service.PageService;
 import com.url_shortener.urls.service.SecurityUtil;
 
 @Controller
 public class PageController {
     @Autowired
     private URLRepository urlRepository;
+    
+    @Autowired
+    private PageService pageService;
     
     @Autowired
     private SecurityUtil securityUtil;
@@ -29,9 +35,11 @@ public class PageController {
      * @return home template name
      */
     @GetMapping("/")
-    public String showHome(Model model) {    
+    public String showHome(
+            @RequestParam(defaultValue = "1") Integer page,
+            Model model) {    
         model.addAttribute("url", new URLEntity()); // provide an empty URLEntity for the form -> needed for th:object in the form
-        List<URLEntity> publicURLs = urlRepository.findByIsPrivateIsFalseOrderByCreatedAtDesc();
+        PageResult<URLEntity> publicURLs = pageService.findAllPublicShortURLs(page);
         model.addAttribute("urls", publicURLs);
         model.addAttribute("baseURL", "http://localhost:9090");
         return "index";
@@ -49,6 +57,7 @@ public class PageController {
     
     @GetMapping("/my-urls")
     public String showMyURLs(Model model) {
+        // TODO: do the same thing as the pageService.findUserPrivateURLs() + pagination
         UserEntity currentUser = securityUtil.getCurrentUser();
         System.out.println("Current user: " + currentUser.getEmail());
         

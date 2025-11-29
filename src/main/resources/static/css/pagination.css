@@ -1,0 +1,42 @@
+.pagination {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.pagination a {
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #0069ff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: all 0.2s;
+}
+
+.pagination a:hover:not(.disabled) {
+    background-color: #0069ff;
+    color: white;
+}
+
+.pagination a.disabled {
+    pointer-events: none;
+    color: #aaa;
+    border-color: #eee;
+}
+
+.pagination table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.pagination table th, table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.pagination table th {
+    background-color: #f4f4f4;
+}

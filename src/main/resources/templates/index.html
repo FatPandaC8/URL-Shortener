@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Shortener</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/pagination.css">
 </head>
 <body>
 
@@ -50,7 +51,7 @@
     </div>
 </section>
 
-<section class="list" th:if="${urls != null and !urls.isEmpty()}">
+<section class="list" th:if="${urls != null and !urls.data.isEmpty()}">
     <h2>Public Links</h2>
 
     <table>
@@ -62,7 +63,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="url : ${urls}">
+            <tr th:each="url : ${urls.data}">
                 <td>
                     <a th:href="${url.originalURL}" th:text="${#strings.abbreviate(url.originalURL, 50)}"></a>
                 </td>
@@ -75,6 +76,13 @@
         </tbody>
     </table>
 </section>
+<div class="pagination">
+    <a th:href="@{|?page=1|}" th:classappend="${urls.isFirst} ? 'disabled'">First</a>
+    <a th:href="@{|?page=${urls.pageNumber - 1}|}" th:classappend="${urls.isFirst} ? 'disabled'">Previous</a>
+    <span>Page <span th:text="${urls.pageNumber}"></span> of <span th:text="${urls.totalPages}"></span></span>
+    <a th:href="@{|?page=${urls.pageNumber + 1}|}" th:classappend="${urls.isLast} ? 'disabled'">Next</a>
+    <a th:href="@{|?page=${urls.totalPages}|}" th:classappend="${urls.isLast} ? 'disabled'">Last</a>
+</div>
 
 </body>
 </html>
